@@ -105,8 +105,7 @@ reductionsApply _ = id
 
 -- Replaces a wildcard in a list with the list given as the third argument
 substitute :: Eq a => a -> [a] -> [a] -> [a]
-substitute _ _ _ = []
-{- TO BE WRITTEN -}
+substitute w p s = foldl (\x y -> if x==w then y++s else y++x)
 
 
 -- Tries to match two lists. If they match, the result consists of the sublist
