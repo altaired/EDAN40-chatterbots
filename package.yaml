@@ -21,13 +21,14 @@ description:         Please see the README on Github at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- random
 
 library:
   source-dirs: src
 
 executables:
   chatterbots-exe:
-    main:                Main.hs
+    main:                Eliza.hs
     source-dirs:         app
     ghc-options:
     - -threaded
@@ -38,7 +39,7 @@ executables:
 
 tests:
   chatterbots-test:
-    main:                Spec.hs
+    main:                ChatterbotTest.hs
     source-dirs:         test
     ghc-options:
     - -threaded
@@ -46,3 +47,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - chatterbots
+    - HUnit
