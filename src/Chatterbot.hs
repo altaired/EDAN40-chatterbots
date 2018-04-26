@@ -31,20 +31,18 @@ stateOfMind :: BotBrain -> IO (Phrase -> Phrase)
 stateOfMind _ = return id
 
 rulesApply :: [PhrasePair] -> Phrase -> Phrase
-{- TO BE WRITTEN -}
-rulesApply _ = id
+rulesApply ts = try (\p -> (transformationsApply "*" id ts (reflect p)))
 
 reflect :: Phrase -> Phrase
 reflect [] = []
 reflect p = map reflectOne p
 
 reflectOne :: String -> String
-reflectOne s = try
+reflectOne = try
   (\s -> mmap
     (\(a, b) -> b)
     (find (\(a, _) -> a == s) reflections)
   )
-  s
 
 reflections =
   [ ("am",     "are"),
