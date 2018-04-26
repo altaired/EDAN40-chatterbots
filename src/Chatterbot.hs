@@ -2,6 +2,7 @@ module Chatterbot where
 import Utilities
 import System.Random
 import Data.Char
+import Data.List
 
 chatterbot :: String -> [(String, [String])] -> IO ()
 chatterbot botName botRules = do
@@ -34,8 +35,16 @@ rulesApply :: [PhrasePair] -> Phrase -> Phrase
 rulesApply _ = id
 
 reflect :: Phrase -> Phrase
-{- TO BE WRITTEN -}
-reflect = id
+reflect [] = []
+reflect p = map reflectOne p
+
+reflectOne :: String -> String
+reflectOne s = try
+  (\s -> mmap
+    (\(a, b) -> b)
+    (find (\(a, _) -> a == s) reflections)
+  )
+  s
 
 reflections =
   [ ("am",     "are"),

@@ -77,8 +77,8 @@ module Main where
       "substitute" ~: Main.substituteTest,
       "match" ~: Main.matchTest,
       "transformationApply" ~: transformationApplyTest,
-      "transformationsApply" ~: transformationsApplyTest
-      -- "reflect" ~: reflectTest,
+      "transformationsApply" ~: transformationsApplyTest,
+      "reflect" ~: reflectTest
       -- "rulesApply" ~: rulesApplyTest
     ]
 
