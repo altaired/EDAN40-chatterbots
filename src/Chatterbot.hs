@@ -3,6 +3,7 @@ import Utilities
 import System.Random
 import Data.Char
 import Data.List
+import Data.Maybe
 
 chatterbot :: String -> [(String, [String])] -> IO ()
 chatterbot botName botRules = do
@@ -33,7 +34,7 @@ stateOfMind bb = do
 
 
 rulesApply :: [PhrasePair] -> Phrase -> Phrase
-rulesApply ts p = maybe [] id $ transformationsApply "*" reflect ts p
+rulesApply ts p = fromMaybe [] $ transformationsApply "*" reflect ts p
 
 reflect :: Phrase -> Phrase
 reflect = map . try $ flip lookup reflections
