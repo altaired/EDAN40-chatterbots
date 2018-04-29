@@ -33,7 +33,7 @@ stateOfMind bb = do
 
 
 rulesApply :: [PhrasePair] -> Phrase -> Phrase
-rulesApply ts p = maybe [] id (transformationsApply "*" id ts (reflect p))
+rulesApply ts p = maybe [] id $ transformationsApply "*" reflect ts p
 
 reflect :: Phrase -> Phrase
 reflect = map . try $ flip lookup reflections
