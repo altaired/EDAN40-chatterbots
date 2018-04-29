@@ -36,15 +36,7 @@ rulesApply :: [PhrasePair] -> Phrase -> Phrase
 rulesApply ts p = maybe [] id (transformationsApply "*" id ts (reflect p))
 
 reflect :: Phrase -> Phrase
-reflect [] = []
-reflect p = map reflectOne p
-
-reflectOne :: String -> String
-reflectOne = try
-  (\s -> mmap
-    (\(a, b) -> b)
-    (find (\(a, _) -> a == s) reflections)
-  )
+reflect = map . try $ flip lookup reflections
 
 reflections =
   [ ("am",     "are"),
@@ -78,7 +70,7 @@ prepare :: String -> Phrase
 prepare = reduce . words . map toLower . filter (not . flip elem ".,:;*!#%&|") 
 
 rulesCompile :: [(String, [String])] -> BotBrain
-rulesCompile x = map (map2 (prepare, map prepare)) x 
+rulesCompile = map (map2 (words . map toLower, map words))
 
 
 --------------------------------------
@@ -155,8 +147,8 @@ matchCheck = matchTest == Just testSubstitutions
 
 -- Applying a single pattern
 transformationApply :: Eq a => a -> ([a] -> [a]) -> [a] -> ([a], [a]) -> Maybe [a]
-transformationApply wc _ sent (eng, fra) =
-  mmap (substitute wc fra) (match wc eng sent)
+transformationApply wc f sent (eng, fra) =
+  mmap (substitute wc fra . f) (match wc eng sent)
 
 
 -- Applying a list of patterns until one succeeds
